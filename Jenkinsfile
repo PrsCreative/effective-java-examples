@@ -9,7 +9,7 @@ pipeline{
 		//DOCKER_IMAGE=''
 		
         //Jenkins Path
-        JENKINS_WORKSPACE = "/var/lib/jenkins/workspace/"
+        JENKINS_WORKSPACE = "/var/lib/jenkins/"
 
 		APP_VERSION_BUILD = "0"
 		MAJOR_BUILD = "0"
@@ -47,9 +47,11 @@ pipeline{
                 '''
             }
         }
+
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
+                    dir("${JENKINS_WORKSPACE}workspace")
                     sh '''
                     mvn clean verify sonar:sonar -Dsonar.host.url=${SONARSERVER} -Dsonar.login=${SONARTOKEN} -Dsonar.dir=src -Dsonar.java.binaries=.builds
                     '''
