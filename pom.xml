@@ -29,18 +29,5 @@
                 </configuration>
             </plugin>
         </plugins>
-        <plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>1.3.6</version>
-				<configuration>
-					<tag>${project.version}</tag>
-					<repository>${docker.image.prefix}/efiling-court/${project.artifactId}</repository>
-					<buildArgs>
-						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-					</buildArgs>
-					<noCache>true</noCache>
-				</configuration>
-			</plugin>
     </build>
 </project>
