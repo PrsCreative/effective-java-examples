@@ -9,7 +9,7 @@ pipeline{
 		//DOCKER_IMAGE=''
 		
         //Jenkins Path
-        JENKINS_WORKSPACE = "/var/lib/jenkins/workspace/
+        JENKINS_WORKSPACE = "/var/lib/jenkins/workspace/"
 
 		APP_VERSION_BUILD = "0"
 		MAJOR_BUILD = "0"
