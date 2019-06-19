@@ -2,10 +2,9 @@ pipeline{
 	environment{
 	    DEPLOYMENT = "register-api"
 	    NAMESPACE = "efiling-sit"
-	    
-		REGISTRY = "ktbirp81.ktb:5000"
+
 		//REGISTRY_CREDENTIAL = 'dockerhub'
-		IMAGE_NAME = "efiling-court/e-filing-court-register"
+		IMAGE_NAME = "efective/jave-examples"
 		//DOCKER_IMAGE=''
 		
         //Jenkins Path
@@ -42,7 +41,7 @@ pipeline{
                 checkout scm
 
                 sh '''
-		touch /var/lib/jenkins/workspace/build-java/init.txt
+		mkdir /var/lib/jenkins/workspace/build-java
 		cp -a * /var/lib/jenkins/workspace/build-java 
                 mvn versions:set -DnewVersion=${BUILD_VERSION_SN}
                 mvn clean package -DskipTests
