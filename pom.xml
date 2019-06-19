@@ -21,7 +21,7 @@
     </dependencies>
     <properties>
 		<dockerfile.version>1.4.1</dockerfile.version>
-        <docker.image.prefix>surevine</docker.image.prefix>
+        <docker.image.prefix>src</docker.image.prefix>
 	</properties>
     <build>
         <plugins>
