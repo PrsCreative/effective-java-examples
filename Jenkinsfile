@@ -51,7 +51,7 @@ pipeline{
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    dir("${JENKINS_WORKSPACE}workspace")
+                    dir("${JENKINS_WORKSPACE}workspace/build-java@script")
                     sh '''
                     mvn clean verify sonar:sonar -Dsonar.host.url=${SONARSERVER} -Dsonar.login=${SONARTOKEN} -Dsonar.dir=src -Dsonar.java.binaries=.builds
                     '''
