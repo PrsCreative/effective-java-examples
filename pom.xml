@@ -20,10 +20,8 @@
         </dependency>
     </dependencies>
     <properties>
-		<java.version>1.8</java.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<docker.image.prefix>https://cloud.docker.com/repository/docker/prscreative</docker.image.prefix>
-		<powermock.lib.version>2.0.0-beta.5</powermock.lib.version>
+		<dockerfile.version>1.4.1</dockerfile.version>
+        <docker.image.prefix>surevine</docker.image.prefix>
 	</properties>
     <build>
         <plugins>
@@ -34,19 +32,37 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            
             <plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>1.3.6</version>
-				<configuration>
-					<tag>${project.version}</tag>
-					<repository>${docker.image.prefix}/build-java</repository>
-					<buildArgs>
-						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-					</buildArgs>
-					<noCache>true</noCache>
-				</configuration>
-			</plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>${dockerfile.version}</version>
+                <!-- Wire up to the default build phases -->
+                <executions>
+                <execution>
+                    <id>default</id>
+                    <goals>
+                    <goal>build</goal>
+                    <goal>push</goal>
+                    </goals>
+                </execution>
+                </executions>
+                <configuration>
+                <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                <buildArgs>
+                    <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                </buildArgs>
+                </configuration>
+                <dependencies>
+                <!-- To make this work on JDK 9+ -->
+                <dependency>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>javax.activation-api</artifactId>
+                    <version>1.2.0</version>
+                </dependency>
+                </dependencies>
+            </plugin>
+            
         </plugins>
     </build>
 </project>
