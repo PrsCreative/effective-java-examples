@@ -41,7 +41,7 @@ pipeline{
                 checkout scm
 
                 sh '''
-		sudo mkdir /var/lib/jenkins/workspace/build-java
+		mkdir /var/lib/jenkins/workspace/build-java
 		cp -a * /var/lib/jenkins/workspace/build-java 
                 mvn versions:set -DnewVersion=${BUILD_VERSION_SN}
                 mvn clean package -DskipTests
