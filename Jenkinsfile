@@ -51,7 +51,7 @@ pipeline{
             steps {
                 withSonarQubeEnv('SonarQube') {
                     sh '''
-		    cp -rf /var/lib/jenkins/workspace/build-java@script/* /var/lib/jenkins/workspace/build-java
+		    cp -rf /var/lib/jenkins/workspace/build-java@2/* /var/lib/jenkins/workspace/build-java
                     mvn clean verify sonar:sonar -Dsonar.host.url=${SONARSERVER} -Dsonar.login=${SONARTOKEN} -Dsonar.dir=src -Dsonar.java.binaries=builds
                     '''
                 }
