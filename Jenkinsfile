@@ -16,7 +16,7 @@ pipeline{
 		BUILD_VERSION_RC = "$APP_VERSION_BUILD.$MAJOR_BUILD.${BUILD_NUMBER}-RELEASE"
 		
 		SONARSERVER = "http://127.0.0.1:9000"
-		SONARTOKEN = "393954c5eed98ac1f4f6a594ecdf8c028e99f515"
+		SONARTOKEN = "259465f9e4fea177e1ea5229d954d7401e2ea088"
 
 		//integration test
 		//NEWMAN_PATH = "src/test/newman/"
