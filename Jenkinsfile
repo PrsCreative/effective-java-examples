@@ -30,6 +30,7 @@ pipeline{
         FROM_EMAIL = "no-reply-cicd-efiling@ktb.co.th"
 		TO_EMAIL = "prawit@orcsoft.co.th"
 	}
+	
     agent any
     options {
         skipDefaultCheckout()
@@ -55,8 +56,7 @@ pipeline{
 		
 	stage('FTP Upload file to server') {
             steps{
-                ftpPublisher
-                    alwaysPublishFromMaster: true,
+                ftpPublisher alwaysPublishFromMaster: true,
                     continueOnError: false,
                     failOnError: false,
                     publishers: [
@@ -87,7 +87,7 @@ pipeline{
                             ]
                     ]
             }
-		}
+	}
 
         stage('SonarQube analysis') {
             steps {
