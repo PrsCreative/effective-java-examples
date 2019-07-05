@@ -18,6 +18,12 @@ pipeline{
 		SONARSERVER = "http://127.0.0.1:9000"
 		SONARTOKEN = "de83baab9f01bccf692c797c6fe284bc7db85eb7"
 
+	SOURCE_DIRECTORY = "/var/lib/jenkins/workspace/build-java/target/"
+	FTP_HOST ="10.9.213.171"
+        FTP_USERNAME = "xx"
+        FTP_PASSWORD = "x@"
+        FTP_PORT = 22
+	FTP_REMOTE_DIRECTORY = "/domains/prscreative.com/public_html/upload/"
 		//integration test
 		//NEWMAN_PATH = "src/test/newman/"
         //EMAIL_TEMPLATE = "template-default.hbs"
@@ -46,6 +52,42 @@ pipeline{
                 '''
             }
         }
+		
+		stage('FTP Upload file to server') {
+            steps{
+                ftpPublisher
+                    alwaysPublishFromMaster: true,
+                    continueOnError: false,
+                    failOnError: false,
+                    publishers: [
+                            [
+                                configName: 'FTP Configuration',
+                                transfers: [
+                                        [
+                                            asciiMode: false,
+                                            cleanRemote: false,
+                                            excludes: '',
+                                            flatten: false,
+                                            makeEmptyDirs: false,
+                                            noDefaultExcludes: false,
+                                            patternSeparator: '[, ]+',
+                                            remoteDirectory: ${FTP_REMOTE_DIRECTORY},
+                                            remoteDirectorySDF: false,
+                                            removePrefix: '',
+                                            sourceFiles: '/var/lib/jenkins/workspace/build-java/target/**.jar'
+                                        ]
+                                    ],
+                                usePromotionTimestamp: false,
+                                useWorkspaceInPromotion: false,
+                                verbose: true,
+                                ftpCredentials: [
+                                    username: ${FTP_USERNAME},
+                                    password: ${FTP_PASSWORD}
+                                ]
+                            ]
+                    ]
+            }
+		}
 
         stage('SonarQube analysis') {
             steps {
