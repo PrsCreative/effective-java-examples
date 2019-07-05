@@ -19,9 +19,9 @@ pipeline{
 		SONARTOKEN = "de83baab9f01bccf692c797c6fe284bc7db85eb7"
 
 	SOURCE_DIRECTORY = "/var/lib/jenkins/workspace/build-java/target/"
-	FTP_HOST ="103.27.200.170"
-        FTP_USERNAME = "prawit@prscreative.com"
-        FTP_PASSWORD = "U1IpAoL9"
+	FTP_HOST =""
+        FTP_USERNAME = ""
+        FTP_PASSWORD = ""
         FTP_PORT = 22
 	FTP_REMOTE_DIRECTORY = "/public_html/upload/"
 		//integration test
