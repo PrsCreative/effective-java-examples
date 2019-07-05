@@ -53,7 +53,7 @@ pipeline{
             }
         }
 		
-		stage('FTP Upload file to server') {
+	stage('FTP Upload file to server') {
             steps{
                 ftpPublisher
                     alwaysPublishFromMaster: true,
