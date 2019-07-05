@@ -37,42 +37,41 @@ pipeline{
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
 	stages {
-        stage('Checkout & Build') {
-            agent {
-                docker {
-                    image 'maven:3-alpine'
-            	    args '-v $HOME/.m2:/root/.m2'
-                }
-            }
-            steps {
-                checkout scm
+		stage('Checkout & Build') {
+		    agent {
+			docker {
+			    image 'maven:3-alpine'
+			    args '-v $HOME/.m2:/root/.m2'
+			}
+		    }
+		    steps {
+			checkout scm
 
-                sh '''
-                mvn versions:set -DnewVersion=${BUILD_VERSION_SN}
-                mvn clean package -DskipTests
-                '''
-            }
-        }
-		
-	stage('Upload')
-	{
-	    ftpPublisher alwaysPublishFromMaster: true, continueOnError: false, failOnError: false, publishers: [
-		[configName: 'YOUR_CONFIG_HERE', transfers: [
-		    [asciiMode: false, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: "YOUR_DIRECTORY_HERE", remoteDirectorySDF: false, removePrefix: '', sourceFiles: '**.exe, **.txt']
-		], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true]
-	    ]
-	}
+			sh '''
+			mvn versions:set -DnewVersion=${BUILD_VERSION_SN}
+			mvn clean package -DskipTests
+			'''
+		    }
+		}
 
-        stage('SonarQube analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh '''
-		    cp -rf /var/lib/jenkins/workspace/build-java@2/* /var/lib/jenkins/workspace/build-java
-                    mvn clean verify sonar:sonar -Dsonar.host.url=${SONARSERVER} -Dsonar.login=${SONARTOKEN} -Dsonar.dir=src -Dsonar.java.binaries=builds
-                    '''
-                }
-            }
-        }
+		stage('Upload'){
+		    ftpPublisher alwaysPublishFromMaster: true, continueOnError: false, failOnError: false, publishers: [
+			[configName: 'YOUR_CONFIG_HERE', transfers: [
+			    [asciiMode: false, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: "/public_html/upload/", remoteDirectorySDF: false, removePrefix: '', sourceFiles: '/var/lib/jenkins/workspace/build-java/target/**.jar']
+			], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true]
+		    ]
+		}
+
+		stage('SonarQube analysis') {
+		    steps {
+			withSonarQubeEnv('SonarQube') {
+			    sh '''
+			    cp -rf /var/lib/jenkins/workspace/build-java@2/* /var/lib/jenkins/workspace/build-java
+			    mvn clean verify sonar:sonar -Dsonar.host.url=${SONARSERVER} -Dsonar.login=${SONARTOKEN} -Dsonar.dir=src -Dsonar.java.binaries=builds
+			    '''
+			}
+		    }
+		}
 
     }// end stages
 }
