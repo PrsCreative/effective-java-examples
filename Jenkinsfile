@@ -56,7 +56,7 @@ pipeline{
 
 		stage('Upload'){
 		    steps{
-			    ftpPublisher alwaysPublishFromMaster: false, continueOnError: false, failOnError: false, publishers: [[configName: 'PrsCreative Host', transfers: [[asciiMode: false, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/public_html/upload/', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '/var/lib/jenkins/workspace/build-java/target/**.jar']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]], paramPublish: false
+			    ftpPublisher alwaysPublishFromMaster: false, continueOnError: false, failOnError: false, publishers: [[configName: 'PrsCreative Host', transfers: [[asciiMode: false, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/public_html/upload/', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '/var/lib/jenkins/workspace/build-java/target/**.jar']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]], paramPublish: parameterName:[""]
 		    }
 		}
 
