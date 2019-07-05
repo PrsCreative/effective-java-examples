@@ -54,39 +54,13 @@ pipeline{
             }
         }
 		
-	stage('FTP Upload file to server') {
-            steps{
-                ftpPublisher alwaysPublishFromMaster: true,
-                    continueOnError: false,
-                    failOnError: false,
-                    publishers: [
-                            [
-                                configName: 'FTP Configuration',
-                                transfers: [
-                                        [
-                                            asciiMode: false,
-                                            cleanRemote: false,
-                                            excludes: '',
-                                            flatten: false,
-                                            makeEmptyDirs: false,
-                                            noDefaultExcludes: false,
-                                            patternSeparator: '[, ]+',
-                                            remoteDirectory: ${FTP_REMOTE_DIRECTORY},
-                                            remoteDirectorySDF: false,
-                                            removePrefix: '',
-                                            sourceFiles: '/var/lib/jenkins/workspace/build-java/target/**.jar'
-                                        ]
-                                    ],
-                                usePromotionTimestamp: false,
-                                useWorkspaceInPromotion: false,
-                                verbose: true,
-                                ftpCredentials: [
-                                    username: ${FTP_USERNAME},
-                                    password: ${FTP_PASSWORD}
-                                ]
-                            ]
-                    ]
-            }
+	stage('Upload')
+	{
+	    ftpPublisher alwaysPublishFromMaster: true, continueOnError: false, failOnError: false, publishers: [
+		[configName: 'YOUR_CONFIG_HERE', transfers: [
+		    [asciiMode: false, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: "YOUR_DIRECTORY_HERE", remoteDirectorySDF: false, removePrefix: '', sourceFiles: '**.exe, **.txt']
+		], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true]
+	    ]
 	}
 
         stage('SonarQube analysis') {
